@@ -1,0 +1,15 @@
+#!/usr/bin/bash
+
+if [ -z "$OSUDIR" ]; then
+    echo "OSUDIR not set"
+    exit 1
+fi
+
+for source in "$@"; do
+    dest_object=$(echo $source | rev | cut -f 2- -d '.' | rev)
+    destination="$OSUDIR/Songs/$dest_object"
+    echo "Source $source -> $destination"
+    unzip -d "$destination" "$source"
+    echo "Removing $source"
+    rm -f "$source"
+done
